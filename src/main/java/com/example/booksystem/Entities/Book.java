@@ -1,12 +1,15 @@
 package com.example.booksystem.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import lombok.SneakyThrows;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Data
 @Entity
+@Table(name = "book")
 public class Book {
 
     @Id
@@ -19,11 +22,10 @@ public class Book {
 
     private String author;
 
-
+    @Column(unique = true)
     private String ISBN;
 
-
-    @OneToMany
+    @OneToMany(mappedBy = "book")
     private List<Comment> comments;
 
 }

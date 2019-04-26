@@ -2,6 +2,7 @@ package com.example.booksystem.Controllers;
 
 import com.example.booksystem.DTOs.BookDTO;
 import com.example.booksystem.DTOs.CommentDTO;
+import com.example.booksystem.Entities.Book;
 import com.example.booksystem.Repositories.BookRepo;
 import com.example.booksystem.Services.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,20 +24,24 @@ public class BookController {
     BookService bookService;
 
     @GetMapping("/books")
-    public List<BookDTO> getBooks() {
+    public List<Book> getBooks() {
         return bookService.listBooks();
     }
 
     @PostMapping("/books/add")
     public ResponseEntity<?> postBooks(@Valid @RequestBody BookDTO bookDTO) {
-        bookService.addBook(bookDTO);
-        return new ResponseEntity<>("Book added!", HttpStatus.CREATED);
+        return bookService.addBook(bookDTO);
     }
 
     @PatchMapping("/books/{id}")
-    public BookDTO updateBook(@PathVariable(value = "id") Long id, @RequestBody BookDTO bookDTO) {
+    public ResponseEntity<?> updateBook(@PathVariable(value = "id") Long id, @RequestBody BookDTO bookDTO) {
         bookDTO.set_id(id);
         return bookService.updateBook(bookDTO);
+    }
+
+    @GetMapping("/books/{id}")
+    public ResponseEntity<?> getBook(@PathVariable(value = "id") Long id) {
+        return bookService.getBook(id);
     }
 
     @DeleteMapping("/books/{id}")
@@ -46,8 +51,7 @@ public class BookController {
 
     @PostMapping("/books/{id}/comment")
     public ResponseEntity<?> addComment(@PathVariable(value = "id") Long id, @RequestBody CommentDTO commentDTO) {
-        bookService.addComment(id, commentDTO);
-        return new ResponseEntity<>("Comment added!", HttpStatus.CREATED);
+        return bookService.addComment(id, commentDTO);
 
     }
 
