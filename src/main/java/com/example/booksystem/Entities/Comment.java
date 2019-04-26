@@ -7,9 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import java.sql.Date;
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @Data
 @Entity
@@ -17,7 +15,9 @@ public class Comment {
 
     @Id
     @GeneratedValue
-    private UUID id;
+    private Long id;
+
+    private String content;
 
     @ManyToOne
     private Book book;
