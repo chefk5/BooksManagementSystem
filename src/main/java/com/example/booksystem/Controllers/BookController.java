@@ -52,13 +52,10 @@ public class BookController {
     @PostMapping("/books/{id}/comment")
     public ResponseEntity<?> addComment(@PathVariable(value = "id") Long id, @RequestBody CommentDTO commentDTO) {
         return bookService.addComment(id, commentDTO);
-
     }
 
     @GetMapping("/books/{id}/comment")
     public List<CommentDTO> getComments(@PathVariable(value = "id") Long id) {
         return bookService.getComments(id);
-
-
     }
 }

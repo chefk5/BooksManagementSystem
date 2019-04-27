@@ -1,1 +1,0 @@
-insert  into book (AUTHOR , isbn , title, id  ) values ('khaled', '22222', 'my book', 444)

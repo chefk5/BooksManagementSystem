@@ -59,7 +59,7 @@ public class BookService {
     public ResponseEntity<?> updateBook(BookDTO bookDTO) {
         Book book = bookRepo.similarBookwithId(bookDTO.get_id());
         if(book==null){
-            return new ResponseEntity<>("Book does not exist", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Book does not exist", HttpStatus.NOT_FOUND);
         }
         if(!validateIsbn13(bookDTO.getISBN())){
             return new ResponseEntity<>("Invalid ISBN",HttpStatus.BAD_REQUEST);
@@ -69,29 +69,38 @@ public class BookService {
         book.setISBN(bookDTO.getISBN());
         bookRepo.saveAndFlush(book);
         BookDTO updatedBook = bookAssembler.toResource(book);
-        return new ResponseEntity<>(updatedBook,HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(updatedBook,HttpStatus.OK);
     }
 
     public ResponseEntity<?> getBook(Long id) {
-        Book book = bookRepo.findById(id).orElseThrow(() -> new EntityNotFoundException("Book not found."));
+        Book book = bookRepo.similarBookwithId(id);
+        if(book==null){
+            return new ResponseEntity<>("Book does not exist", HttpStatus.NOT_FOUND);
+        }
         BookDTO bookDTO = bookAssembler.toResource(book);
-        return new ResponseEntity<>(bookDTO,HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(bookDTO,HttpStatus.OK);
     }
 
     public ResponseEntity<?> deleteBook(Long id) {
-        Book book = bookRepo.findById(id).orElseThrow(() -> new EntityNotFoundException("Book not found."));
+        Book book = bookRepo.similarBookwithId(id);
+        if(book==null){
+            return new ResponseEntity<>("Book does not exist", HttpStatus.NOT_FOUND);
+        }
         bookRepo.delete(book);
         return ResponseEntity.ok().build();
     }
 
     public ResponseEntity<?> addComment(Long id, CommentDTO commentDTO) {
-        Book book = bookRepo.findById(id).orElseThrow(() -> new EntityNotFoundException("Book not found"));
+        Book book = bookRepo.similarBookwithId(id);
+        if(book==null){
+            return new ResponseEntity<>("Book does not exist", HttpStatus.NOT_FOUND);
+        }
         Comment comment = new Comment();
         comment.setBook(book);
         comment.setContent(commentDTO.getContent());
         commentRepo.saveAndFlush(comment);
         CommentDTO addedComment = commentAssembler.toResource(comment);
-        return new ResponseEntity<>(addedComment, HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(addedComment, HttpStatus.CREATED);
 
     }
 
