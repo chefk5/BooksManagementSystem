@@ -5,8 +5,13 @@ import com.example.booksystem.DTOs.CommentDTO;
 import com.example.booksystem.Entities.Book;
 import com.example.booksystem.Repositories.BookRepo;
 import com.example.booksystem.Services.BookService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,6 +21,7 @@ import java.util.List;
 @RestController
 @CrossOrigin
 @RequestMapping("BMS/")
+@Api(value = "BooksControllerAPI", produces = MediaType.APPLICATION_JSON_VALUE)
 public class BookController {
 
     @Autowired
@@ -26,6 +32,8 @@ public class BookController {
 
 
     @GetMapping("/books")
+    @ApiOperation("Gets all books")
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "OK", response = Book.class)})
     public List<Book> getBooks() {
         return bookService.listBooks();
     }
