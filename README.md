@@ -16,6 +16,7 @@ This is a Spring Boot application containing a REST API for the book management 
 * Add books
 * List all books
 * Get book by id
+* Update Books
 * Add comments
 * Delete books  
 **More details in swagger documentation**
