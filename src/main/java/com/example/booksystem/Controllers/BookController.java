@@ -14,6 +14,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
+@CrossOrigin
 @RequestMapping("BMS/")
 public class BookController {
 
@@ -22,6 +23,7 @@ public class BookController {
 
     @Autowired
     BookService bookService;
+
 
     @GetMapping("/books")
     public List<Book> getBooks() {
