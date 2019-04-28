@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.4.0.js"
+    integrity="sha256-DYZMCC8HTC+QDr5QNaIcfR7VSPtcISykd+6eSmBW5qo=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
+    <title>Book Management System</title>
+</head>
+
+<body>
+    <h2 class="text-center" id="title">page</h2>
+    <div style="overflow-y: scroll; height:200px;">
+        <div id="table">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Title</th>
+                        <th scope="col">Author</th>
+                        <th scope="col">ISBN-13</th>
+                        <th scope="col">Comments</th>
+                    </tr>
+                </thead>
+                <tbody id="table-body">
+                    <tr id="rows">
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+    <script>
+        function getAllbooks() {
+            var table = $(this)
+            $.ajax({
+                url: 'https://pure-ridge-19017.herokuapp.com/BMS/books/',
+                type: 'GET',
+                dataType: 'json',
+                success: function (response) {
+                    console.log(Response);
+                    var trHTML = '';
+                    let commentNbr = 0;
+                    $.each(response, function (i, item) {
+                        commentNbr = item.comments.length;
+                        console.log(commentNbr);
+                        trHTML += '<tr><td>' + item.id + '</td><td>' + item.title + '</td><td>' + item.author + '</td><td>' + item.isbn + '</td><td>' + commentNbr + '</td></tr>';
+                    });
+                    $('#table-body').append(trHTML);
+                }
+            });
+        }
+
+   
+
+       $(document).ready(function () {
+        getAllbooks();
+    });
+
+
+</script>
+
+
+
+</body>
+
+</html>
