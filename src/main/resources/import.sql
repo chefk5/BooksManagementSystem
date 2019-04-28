@@ -1,1 +1,1 @@
-insert  into book (AUTHOR , isbn , title  ) values ('khaled', ' 978-3-16-148410-0', 'my book')
+insert  into book (AUTHOR , isbn , title, id  ) values ('khaled', '978-3-16-148410-0', 'my book', 444)
