@@ -12,7 +12,7 @@ This is a Spring Boot application containing a REST API for the book management 
 * There is a index.html page. It only lists the available books.
   * Due to time constraints, was not able to make the front end. However, I focused on the backend.
   
-**Whats does the API do?**  
+**What does the API do?**  
 * Add books
 * List all books
 * Get book by id
